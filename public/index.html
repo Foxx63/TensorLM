@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D Vector Playground</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.js"></script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-100 h-screen w-screen overflow-hidden flex flex-col md:flex-row">
+
+    <div id="canvas-container" class="w-full h-1/2 md:w-2/3 md:h-full relative order-1 md:order-2">
+    </div>
+
+    <div class="w-full h-1/2 md:w-1/3 md:h-full bg-slate-800 border-t md:border-t-0 md:border-r border-slate-700 flex flex-col p-4 z-10 shadow-xl order-2 md:order-1">
+        <h1 class="text-lg md:text-xl font-bold text-sky-400 mb-2 md:mb-4">Geometry Engine</h1>
+        
+        <div id="chat-history" class="flex-1 overflow-y-auto space-y-3 mb-3 pr-2 text-xs md:text-sm">
+            <div class="bg-slate-700 p-3 rounded-lg text-slate-300">
+                System: 3D Canvas Initialized. How can I help you plot today?
+            </div>
+        </div>
+
+        <div id="image-preview-container" class="hidden mb-2 relative self-start">
+            <img id="image-preview" class="h-16 md:h-20 rounded border border-slate-600 object-cover">
+            <button id="remove-image-btn" class="absolute -top-2 -right-2 bg-slate-700 hover:bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs transition-colors">✕</button>
+        </div>
+
+        <div class="flex flex-col gap-1 mb-2">
+            <div class="flex items-center justify-between px-2 py-1">
+                <span class="text-[10px] md:text-xs font-semibold text-slate-400 tracking-wider uppercase">Step-by-Step Mode</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="step-toggle" class="sr-only peer">
+                    <div class="w-8 h-4 md:w-9 md:h-5 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 md:after:h-4 md:after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-between px-2 py-1">
+                <span class="text-[10px] md:text-xs font-semibold text-slate-400 tracking-wider uppercase">Drag to Scale Mode</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="scale-toggle" class="sr-only peer">
+                    <div class="w-8 h-4 md:w-9 md:h-5 bg-slate-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 md:after:h-4 md:after:w-4 after:transition-all peer-checked:bg-amber-500"></div>
+                </label>
+            </div>
+        </div>
+
+        <div class="flex gap-2 items-center">
+            <label for="image-upload" class="cursor-pointer bg-slate-700 hover:bg-slate-600 text-slate-300 p-2 md:p-3 rounded-lg transition-colors flex items-center justify-center" title="Upload Image">
+                <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </label>
+            <input type="file" id="image-upload" accept="image/*" class="hidden">
+            
+            <input type="text" id="user-input" class="flex-1 bg-slate-900 border border-slate-600 rounded-lg px-3 py-2 text-xs md:text-sm focus:outline-none focus:border-sky-500" placeholder="Ask or upload an image...">
+            <button id="send-btn" class="bg-sky-600 hover:bg-sky-500 text-white px-3 py-2 rounded-lg transition-colors text-xs md:text-sm font-semibold">Send</button>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script type="module" src="ai.js"></script>
+
+</body>
+</html>
